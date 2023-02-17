@@ -10,6 +10,9 @@ window.addEventListener('DOMContentLoaded', function(){
     var new_rank = document.getElementById("new-rank");
     var new_rank_accept = document.getElementById("new-rank-accept");
 
+    var new_guardian_rank = document.getElementById('new-guardian-rank');
+    var new_guardain_rank_accept = document.getElementById("new-guardian-rank-accept");
+
     var new_weapon = document.getElementById("new-weapon");
     var new_weapon_accept = document.getElementById("new-weapon-accept");
 
@@ -28,6 +31,14 @@ window.addEventListener('DOMContentLoaded', function(){
 
     if(update_guardian){
         update_guardian.addEventListener('click', showUpdateGuardian);
+    }
+
+    if(new_guardian_rank){
+        new_guardian_rank.addEventListener('click', showNewGuardianRank);
+    }
+
+    if(new_guardian_rank_accept){
+        new_guardain_rank_accept.addEventListener('click', hideNewGuardinRank);
     }
 
     if(delete_guardian){
@@ -124,6 +135,16 @@ function showNewRank(){
 
 function hideNewRank(){
     var modal = document.getElementById("new-rank-modal");
+    modal.classList.add('hidden');
+}
+
+function showNewGuardianRank(){
+    var modal = document.getElementById("new-guardian-rank-modal");
+    modal.classList.remove('hidden');
+}
+
+function hideNewGuardinRank(){
+    var modal = document.getElementById("new-guardian-rank-modal");
     modal.classList.add('hidden');
 }
 
