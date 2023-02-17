@@ -1,4 +1,9 @@
+-- CS340 Group 140 Project - Banshee-44's Exotic Shop
+-- Max Goldstein and Torin Perkins
+
 SET FOREIGN_KEY_CHECKS = 0;
+SET AUTOCOMMIT = 0;
+
 DROP TABLE IF EXISTS Guardians;
 DROP TABLE IF EXISTS Ranks;
 DROP TABLE IF EXISTS Guardian_rank;
@@ -89,44 +94,49 @@ CREATE TABLE `Sales` (
     PRIMARY KEY (`sale_id`)
 );
 
-SET FOREIGN_KEY_CHECKS = 1;
-
+-- Insert sample data into Guardians
 INSERT INTO `Guardians`(`glimmer_balance`, `name`) VALUES 
 (100000, 'Commander Zavala'),
 (356124, 'Ikora Rey'),
 (723536, 'Cayde-6');
 
-INSERT INTO `Ranks`(`title`)
-VALUES ('New Light'), ('Vanguard Legend'), ('Crucible God'), ('Gambit Beast'), ('Raid Boss');
+-- Insert sample data into Ranks
+INSERT INTO `Ranks`(`title`) VALUES 
+('New Light'), ('Vanguard Legend'), ('Crucible God'), ('Gambit Beast'), ('Raid Boss');
 
-INSERT INTO `Guardian_rank`(`guardian_id`, `rank_id`)
-VALUES ((SELECT `guardian_id` FROM `Guardians` WHERE `guardian_id`=1), 
+-- Insert sample data into Guardian_rank intersection table
+INSERT INTO `Guardian_rank`(`guardian_id`, `rank_id`) VALUES 
+((SELECT `guardian_id` FROM `Guardians` WHERE `guardian_id`=1), 
 (SELECT `rank_id` FROM `Ranks` WHERE `title`='Vanguard Legend')),
 ((SELECT `guardian_id` FROM `Guardians` WHERE `guardian_id`=2), 
 (SELECT `rank_id` FROM `Ranks` WHERE `title`='Raid Boss')),
 ((SELECT `guardian_id` FROM `Guardians` WHERE `guardian_id`=3), 
 (SELECT `rank_id` FROM `Ranks` WHERE `title`='Crucible God'));
 
+-- Insert sample data into Weapons
 INSERT INTO `Weapons`(`name`, `type`, `slot`, `element`, `description`, `rank_req`, `price`) VALUES 
 ('MIDA Multitool', 'Scout Rifle', 'Kinetic', 'Kinetic', 'Select application: Ballistic engagement. Entrenching tool. Avionics trawl....', 2, 7000),
 ('Telesto', 'Fusion Rifle', 'Elemental', 'Void', 'Vestiges of the Queens Harbingers yet linger among Saturns moons.', 3, 9000),
 ('Risk Runner', 'SMG', 'Elemental', "Arc", 'Charge your soul and let the electrons sing.', 1, '3000');
 
-INSERT INTO `Cosmetics`(`name`, `slot`, `description`, `rank_req`, `class`, `price`)
-VALUES ('St0mp-EE5', 'Legs', 'I call them Stompies! For when your legs need that extra kick.', 2, 'Hunter', 3000),
+-- Insert sample data into Cosmetics
+INSERT INTO `Cosmetics`(`name`, `slot`, `description`, `rank_req`, `class`, `price`) VALUES 
+('St0mp-EE5', 'Legs', 'I call them Stompies! For when your legs need that extra kick.', 2, 'Hunter', 3000),
 ('Astocyte Verse', 'Helm', 'The ideocosm contain within this healm transforms the wearers head', 0, 'Warlock', 5000),
 ('Gwisin Vest', 'Chest', 'The Traveler called my back. Told me my work on this side isnt done yet', 1, 'Hunter', 6000);
 
-INSERT INTO `Consumables`(`name`, `description`, `price`)
-VALUES ('Enhancement Core', 'Use to upgrade your gear', 500), 
+-- Insert sample data into Consumables
+INSERT INTO `Consumables`(`name`, `description`, `price`) VALUES 
+('Enhancement Core', 'Use to upgrade your gear', 500), 
 ('Legendary Shard', 'Craft new mods', 100);
 
+-- Insert sample data into Sales
 INSERT INTO `Sales`(`total_price`, `guardian_id`, `weapon_id`, `cosmetic_id`, `consumable_id`)VALUES 
 ((SELECT `price` FROM `Weapons` WHERE `name` = 'MIDA Multitool'), 1, (SELECT `weapon_id` FROM `Weapons` WHERE `name` = 'MIDA Multitool'), NULL, NULL),
 ((SELECT `price` FROM `Weapons` WHERE `name` = 'Risk Runner') + (SELECT `price` FROM `Cosmetics` WHERE `name` = 'St0mp-EE5'), 2, 
 (SELECT `weapon_id` FROM `Weapons` WHERE `name` = 'Risk Runner'), (SELECT `cosmetic_id` FROM `Cosmetics` WHERE `name` = 'St0mp-EE5'), NULL);
 
-
+-- Display tables for testing
 SELECT * FROM `Guardians`;
 
 SELECT * FROM `Ranks`;
@@ -140,3 +150,6 @@ SELECT * FROM `Cosmetics`;
 SELECT * FROM `Consumables`;
 
 SELECT * FROM `Sales`;
+
+SET FOREIGN_KEY_CHECKS = 1;
+COMMIT;
