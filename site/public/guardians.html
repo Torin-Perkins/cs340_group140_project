@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Group 140 Project</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js" charset="utf-8" defer></script>
+    </head>
+    <body>
+        <div class="table-box">
+            <h1 class="table-title">Guardians</h1>
+            <table>
+                <tr>
+                    <th>Guardian ID</th>
+                    <th>Name</th>
+                    <th>Glimmer Balance</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Commander Zavala</td>
+                    <td>100000</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Ikora Rey</td>
+                    <td>356124</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Cayde-6</td>
+                    <td>723536</td>
+                </tr>
+            </table>
+        </div>
+        <div class="action-button">
+            <button id="new-guardian">New Guardian</button>
+            <button id="update-guardian">Update Guardian</button>
+            <button id="delete-guardian">Delete Guardian</button>
+        </div>
+        <div class="hidden" id="new-guardian-modal">
+            <label for="name-input">Name:</label>
+            <input id="name-input" type="text"></input>
+
+            <label for="glimmer-input">Glimmer Balance:</label>
+            <input id="glimmer-input" type="text"></input>
+            <button id="new-guardian-accept">Accept</button>
+        </div>
+        <div class="hidden" id="update-guardian-modal">
+            <label for="guardian-input-up">Choose a guardian:</label>
+            <select name="guardian-input-up" id="guardian-input-up">
+                <option value="1">Commander Zavala</option>
+                <option value="2">Ikora Rey</option>
+                <option value="3">Cayde-6</option>
+            </select>
+            <label for="name-input-up">Name:</label>
+            <input id="name-input-up" type="text"></input>
+
+            <label for="glimmer-input-up">Glimmer Balance:</label>
+            <input id="glimmer-input-up" type="text"></input>
+            <button id="update-guardian-accept">Accept</button>
+        </div>
+        <div class="hidden" id="delete-guardian-modal">
+            <label for="guardian-input-del">Choose a guardian:</label>
+            <select name="guardian-input-del" id="guardian-input-del">
+                <option value="1">Commander Zavala</option>
+                <option value="2">Ikora Rey</option>
+                <option value="3">Cayde-6</option>
+            </select>
+            
+            <button id="delete-guardian-accept">Accept</button>
+        </div>
+    </body>
+</html>

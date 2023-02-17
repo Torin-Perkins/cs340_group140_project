@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Group 140 Project</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js" charset="utf-8" defer></script>
+    </head>
+    <body>
+        <div class="table-box">
+            <h1 class="table-title">Sales</h1>
+            <table>
+                <tr>
+                    <th>Sale ID</th>
+                    <th>Total Price</th>
+                    <th>Guardian ID</th>
+                    <th>Weapon ID</th>
+                    <th>Cosmetic ID</th>
+                    <th>Consumable ID</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>7000</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>6000</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>N/A</td>
+                </tr>
+                
+            </table>
+        </div>
+        <div class="action-button">
+            <button id="new-sale">New Sale</button>
+        </div>
+        <div class="hidden" id="new-sale-modal">
+            <label for="guardian-id-input">Guardain ID:</label>
+            <input id="guardian-id-input" type="text"></input>
+
+            <label for="weapon-id-input">Weapon ID:</label>
+            <input id="weapon-id-input" type="text"></input>
+
+            <label for="cosmetic-id-input">Cosmetic ID:</label>
+            <input id="cosmetic-id-input" type="text"></input>
+
+            <label for="consumable-id-input">Consumable ID:</label>
+            <input id="consumable-id-input" type="text"></input>
+
+            <button id="new-rank-accept">Accept</button>
+        </div>
+    </body>
+</html>
