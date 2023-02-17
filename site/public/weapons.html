@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Group 140 Project</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js" charset="utf-8" defer></script>
+    </head>
+    <body>
+        <div class="table-box">
+            <h1 class="table-title">Weapons</h1>
+            <table>
+                <tr>
+                    <th>Weapon ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Slot</th>
+                    <th>Element</th>
+                    <th>Description</th>
+                    <th>Rank Requirement</th>
+                    <th>Price</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>MIDA Multitool</td>
+                    <td>Scout Rifle</td>
+                    <td>Kinetic</td>
+                    <td>Kinetic</td>
+                    <td>Select application: Ballistic engagement. Entrenching tool. Avionics trawl....</td>
+                    <td>2</td>
+                    <td>7000</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Telesto</td>
+                    <td>Fusion Rifle</td>
+                    <td>Elemental</td>
+                    <td>Void</td>
+                    <td>Vestiges of the Queens Harbingers yet linger among Saturns moons.</td>
+                    <td>3</td>
+                    <td>9000</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Risk Runner</td>
+                    <td>SMG</td>
+                    <td>Elemental</td>
+                    <td>Arc</td>
+                    <td>Charge your soul and let the electrons sing.</td>
+                    <td>1</td>
+                    <td>3000</td>
+                </tr>
+            </table>
+        </div>
+        <div class="action-button">
+            <button id="new-weapon">New Weapon</button>
+        </div>
+        <div class="hidden" id="new-weapon-modal">
+            <label for="weapon-name-input">Name:</label>
+            <input id="weapon-name-input" type="text"></input>
+
+            <label for="weapon-type-input">Type:</label>
+            <input id="weapon-type-input" type="text"></input>
+
+            <label for="weapon-slot-input">Slot:</label>
+            <input id="weapon-slot-input" type="text"></input>
+
+            <label for="weapon-element-input">Element:</label>
+            <input id="weapon-element-input" type="text"></input>
+
+            <label for="weapon-description-input">Description:</label>
+            <input id="weapon-description-input" type="text"></input>
+
+            <label for="weapon-rank-input">Rank Requirement:</label>
+            <input id="weapon-rank-input" type="text"></input>
+
+            <label for="weapon-price-input">Price:</label>
+            <input id="weapon-price-input" type="text"></input>
+
+            <button id="new-rank-accept">Accept</button>
+        </div>
+    </body>
+</html>
