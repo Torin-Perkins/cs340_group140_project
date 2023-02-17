@@ -13,6 +13,12 @@ UPDATE `Guardians` SET`glimmer_balance` = ':glimmer_input', `name` = 'new_name_i
 -- delete guardian
 DELETE FROM `Guardians` WHERE `guardian_id` = ':id_dropdown_select'; 
 
+-- Guardian_rank
+
+-- add a new rank to a guardian
+INSERT INTO `Guardian_rank`(`guardian_id`, `rank_id`) VALUES 
+((SELECT `guardian_id` FROM `Guardians` WHERE `guardian_id` = ':id_dropdown_select'), 
+(SELECT `rank_id` FROM `Ranks` WHERE `title` = ':title_dropdown_select'));
 
 -- Ranks:
 
@@ -61,5 +67,10 @@ SELECT * FROM Sales;
 
 --add new sale
 -- price is calculated automatically based on the dropdown selections, if the selected guardian cannot afford it an error will be displayed
+-- dropdowns can be NULL
 INSERT INTO `Sales`(`total_price`, `guardian_id`, `weapon_id`, `cosmetic_id`, `consumable_id`) VALUES 
-(':price_calculated_from_items', ':guardian_dropdown_select', ':weapon_dropdown_select', ':cosmetic_dropdown_select', ':consumable_dropdown_select')
+(':price_calculated_from_items', 
+(SELECT `weapon_id` FROM `Weapons` WHERE `name` = ':weapon_dropdown_select'), 
+(SELECT `cosmetic_id` FROM `Cosmetics` WHERE `name` = ':cosmetic_dropdown_select'), 
+(SELECT `consumable_id` FROM `Consumables` WHERE `name` = ':consumable_dropdown_select'));
+
