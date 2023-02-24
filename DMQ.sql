@@ -1,24 +1,36 @@
 -- Guardians:
 
--- show all guardians and their attributes
-SELECT * FROM Guardians;
+-- show all guardians and their ranks
+SELECT Guardians.guardian_id, Guardians.name, Guardians.glimmer_balance, Ranks.title FROM Guardians
+INNER JOIN Guardian_rank ON Guardians.guardian_id = Guardian_rank.guardian_id
+INNER JOIN Ranks ON Guardian_rank.rank_id = Ranks.rank_id;
 
 -- add new guardian
 INSERT INTO `Guardians`(`glimmer_balance`, `name`) VALUES 
 (':glimmer_input', ':name_input');
 
 -- update guardian
-UPDATE `Guardians` SET`glimmer_balance` = ':glimmer_input', `name` = 'new_name_input' WHERE `guardian_id` = ':id_dropdown_select';
+UPDATE `Guardians` SET `glimmer_balance` = ':glimmer_input', `name` = 'new_name_input' WHERE `guardian_id` = ':id_dropdown_select';
 
 -- delete guardian
-DELETE FROM `Guardians` WHERE `guardian_id` = ':id_dropdown_select'; 
+DELETE FROM `Guardians` WHERE `guardian_id` = ':id_from_dynamic_search'; 
 
--- Guardian_rank
+-- add a rank to a guardian
+-- will automatically run when creating a new guardian based on the selected rank from the dropdown
+-- if left blank "New Light" will be applied as a default rank
+INSERT INTO `Guardian_rank`(`guardian_id`, `rank_id`) VALUES 
+((SELECT `guardian_id` FROM `Guardians` WHERE `guardian_id` = ':id_from_new_guardian'), 
+(SELECT `rank_id` FROM `Ranks` WHERE `title` = ':title_dropdown_select'));
+
+
+-- Guardian_rank:
 
 -- add a new rank to a guardian
+-- for existing guardians
 INSERT INTO `Guardian_rank`(`guardian_id`, `rank_id`) VALUES 
 ((SELECT `guardian_id` FROM `Guardians` WHERE `guardian_id` = ':id_dropdown_select'), 
 (SELECT `rank_id` FROM `Ranks` WHERE `title` = ':title_dropdown_select'));
+
 
 -- Ranks:
 
@@ -63,7 +75,12 @@ INSERT INTO `Consumables`(`name`, `description`, `price`) VALUES
 -- Sales:
 
 -- show all sales and their attributes
-SELECT * FROM Sales;
+SELECT Sales.total_price, Sales.guardian_id, Guardians.name AS Guardian, Weapons.name AS Weapon, 
+Cosmetics.name AS Cosmetic, Consumables.name AS Consumable FROM Sales
+INNER JOIN Guardians ON Sales.guardian_id = Guardians.guardian_id
+LEFT JOIN Weapons ON Sales.weapon_id = Weapons.weapon_id
+LEFT JOIN Cosmetics ON Sales.cosmetic_id = Cosmetics.cosmetic_id
+LEFT JOIN Consumables ON Sales.consumable_id = Consumables.consumable_id;
 
 --add new sale
 -- price is calculated automatically based on the dropdown selections, if the selected guardian cannot afford it an error will be displayed

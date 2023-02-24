@@ -128,13 +128,15 @@ INSERT INTO `Cosmetics`(`name`, `slot`, `description`, `rank_req`, `class`, `pri
 -- Insert sample data into Consumables
 INSERT INTO `Consumables`(`name`, `description`, `price`) VALUES 
 ('Enhancement Core', 'Use to upgrade your gear', 500), 
-('Legendary Shard', 'Craft new mods', 100);
+('Legendary Shard', 'Craft new mods', 100),
+('Upgrade Module', 'Infuse your gear', 200);
 
 -- Insert sample data into Sales
 INSERT INTO `Sales`(`total_price`, `guardian_id`, `weapon_id`, `cosmetic_id`, `consumable_id`)VALUES 
 ((SELECT `price` FROM `Weapons` WHERE `name` = 'MIDA Multitool'), 1, (SELECT `weapon_id` FROM `Weapons` WHERE `name` = 'MIDA Multitool'), NULL, NULL),
 ((SELECT `price` FROM `Weapons` WHERE `name` = 'Risk Runner') + (SELECT `price` FROM `Cosmetics` WHERE `name` = 'St0mp-EE5'), 2, 
-(SELECT `weapon_id` FROM `Weapons` WHERE `name` = 'Risk Runner'), (SELECT `cosmetic_id` FROM `Cosmetics` WHERE `name` = 'St0mp-EE5'), NULL);
+(SELECT `weapon_id` FROM `Weapons` WHERE `name` = 'Risk Runner'), (SELECT `cosmetic_id` FROM `Cosmetics` WHERE `name` = 'St0mp-EE5'), NULL),
+((SELECT `price` FROM `Consumables` WHERE `name` = 'Enhancement Core'), 3, NULL, NULL, (SELECT `consumable_id` FROM `Consumables` WHERE `name` = 'Enhancement Core'));
 
 -- Display tables for testing
 SELECT * FROM `Guardians`;
