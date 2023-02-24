@@ -25,6 +25,12 @@ INSERT INTO `Guardian_rank`(`guardian_id`, `rank_id`) VALUES
 
 -- Guardian_rank:
 
+-- show all Guardians and Ranks
+
+SELECT Guardians.guardian_id, Guardians.name, Ranks.rank_id, Ranks.title FROM Guardians
+INNER JOIN Guardian_rank ON Guardians.guardian_id = Guardian_rank.guardian_id
+INNER JOIN Ranks ON Guardian_rank.rank_id = Ranks.rank_id;
+
 -- add a new rank to a guardian
 -- for existing guardians
 INSERT INTO `Guardian_rank`(`guardian_id`, `rank_id`) VALUES 
