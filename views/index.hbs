@@ -1,0 +1,61 @@
+<!-- index.hbs starter code adapted from https://github.com/osu-cs340-ecampus/nodejs-starter-app-->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Create a table --}}
+<table id="guardians_table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <h1>Guardians</h1>
+        <tr>
+            <th>Guardian ID</th>
+            <th>Name</th>
+            <th>Glimmer Balance</th>
+            <th>Ranks</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{#each data}}
+        <tr data-value={{this.guardian_id}}>
+            <td>{{this.guardian_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.glimmer_balance}}</td>
+            <td>{{this.rank_id}}</td>
+            <td><button onclick="deleteGuardian({{this.guardian_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+        
+    </tbody>
+</table>
+<script src="./js/delete_guardian.js"></script>
+
+<div class="action-button">
+        <button id="new-guardian">New Guardian</button>
+</div>
+<p>Add a new guardian:</p>
+<form id="add-guardian-form-ajax">
+    <label for="input-name">Name:</label>
+    <input id="input-name" name = "input-name" type="text"></input>
+
+    <label for="input-glimmer">Glimmer Balance:</label>
+    <input id="input-glimmer" name = "input-glimmer" type="number"></input>
+
+    <select name="input-rank" id="input-rank">
+        <option value="">Select a rank</option>
+        {{#each ranks}}
+        <option value="{{this.rank_id}}">{{this.title}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_guardian.js"></script>
