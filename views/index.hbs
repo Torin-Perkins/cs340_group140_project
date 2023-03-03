@@ -66,6 +66,33 @@
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_guardian.js"></script>
+
+<p>Update Guardian</p>
+<form id="update-guardian-form-ajax">
+            <label for="guardian-input-up">Choose a guardian:</label>
+            <select name="guardian-input-up" id="guardian-input-up">
+                {{#each data}}
+                <option value="{{this.guardian_id}}">{{this.guardian_id}}</option>
+                {{/each}}
+            </select>
+            <label for="name-input-up">Name:</label>
+            <input id="name-input-up" type="text"></input>
+
+            <label for="glimmer-input-up">Glimmer Balance:</label>
+            <input id="glimmer-input-up" type="text"></input>
+
+            <label for="update-guardian-rank">Add Rank:</label>
+            <select name="update-guardian-rank" id="update-guardian-rank">
+                <option value="">Select a rank</option>
+                {{#each ranks}}
+                <option value="{{this.rank_id}}">{{this.title}}</option>
+                {{/each}}
+            </select>
+
+            <button id="update-guardian-accept" type="submit">Accept</button>
+    </form>
+<script src="./js/update_guardian.js"></script>
+
 <!--
 <table id="ranks_table">
     <thead>

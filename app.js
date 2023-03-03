@@ -130,6 +130,59 @@ app.delete('/delete-guardian-ajax/', function(req,res,next){
               }
   })});
 
+  app.put('/put-guardian-ajax', function(req, res, next){
+    let data = req.body;
+
+    let guardian_id = parseInt(data.guardian_id);
+    let name = data.name;
+    let glimmer_balance = parseInt(data.glimmer_balance);
+    if (isNaN(glimmer_balance))
+    {
+        glimmer_balance = 0;
+    }
+
+    let new_rank = parseInt(data.rank_id);
+
+    queryUpdateGuardian = `UPDATE Guardians SET name = ?, glimmer_balance = ? WHERE Guardians.guardian_id = ?`;
+    queryUpdateGuardianRanks = `INSERT INTO Guardian_rank (guardian_id, rank_id) VALUES('${guardian_id}', '${new_rank}')`;
+
+    db.pool.query(queryUpdateGuardian, [name, glimmer_balance, guardian_id], function(error, rows, fields){
+        if(error){
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else{
+            db.pool.query(queryUpdateGuardianRanks, function(error, rows, fields){
+                if(error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else{
+                    query2 = `SELECT guardian_id, name, glimmer_balance FROM Guardians WHERE Guardians.guardian_id = ?;`;
+                    db.pool.query(query2,[guardian_id], function(error, rows, fields){
+    
+                    // If there was an error on the second query, send a 400
+                    if (error) {
+                        
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                        console.log(error);
+                        res.sendStatus(400);
+                    }
+                    // If all went well, send the results of the query back.
+                    else
+                    {
+                        console.log(rows);
+                        res.send(rows);
+                    
+                    }
+                })
+            }
+            })
+        }
+    });
+
+  });
+
 /*
     LISTENER
 */
