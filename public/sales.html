@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Group 140 Project</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js" charset="utf-8" defer></script>
+    </head>
+    <body>
+        <ul style="display: inline">
+            <li style="display: inline"><a href="/">Guardians</a></li>
+            <li style="display: inline"><a href="guardian_rank.html">Guardian Ranks</a></li>
+            <li style="display: inline"><a href="ranks.html">Ranks</a></li>
+            <li style="display: inline"><a href="sales.html">Sales</a></li>
+            <li style="display: inline"><a href="weapons.html">Weapons</a></li>
+            <li style="display: inline"><a href="cosmetics.html">Cosmetics</a></li>
+            <li style="display: inline"><a href="consumable.html">Consumables</a></li>
+        </ul>
+        <div class="table-box">
+            <h1 class="table-title">Sales</h1>
+            <table>
+                <tr>
+                    <th>Sale ID</th>
+                    <th>Total Price</th>
+                    <th>Guardian</th>
+                    <th>Weapon</th>
+                    <th>Cosmetic</th>
+                    <th>Consumable</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>7000</td>
+                    <td>Commander Zavala</td>
+                    <td>MIDA Multitool</td>
+                    <td>NULL</td>
+                    <td>NULL</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>6000</td>
+                    <td>Ikora Rey</td>
+                    <td>Riskrunner</td>
+                    <td>St0mp-EE5</td>
+                    <td>NULL</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>6000</td>
+                    <td>Cayde-6</td>
+                    <td>NULL</td>
+                    <td>NULL</td>
+                    <td>Enhancement Core</td>
+                </tr>
+                
+            </table>
+        </div>
+        <div class="action-button">
+            <button id="new-sale">New Sale</button>
+        </div>
+        <div class="hidden" id="new-sale-modal">
+            <label for="guardian-id-input">Guardain ID:</label>
+            <input id="guardian-id-input" type="text"></input>
+
+            <label for="weapon-id-input">Weapon ID:</label>
+            <input id="weapon-id-input" type="text"></input>
+
+            <label for="cosmetic-id-input">Cosmetic ID:</label>
+            <input id="cosmetic-id-input" type="text"></input>
+
+            <label for="consumable-id-input">Consumable ID:</label>
+            <input id="consumable-id-input" type="text"></input>
+
+            <button id="new-rank-accept">Accept</button>
+        </div>
+    </body>
+</html>

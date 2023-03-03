@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
-PORT = 9111;                 // Set a port number at the top so it's easy to change in the future
+PORT = 9112;                 // Set a port number at the top so it's easy to change in the future
 var db = require('./database/db-connector')
 
 const { engine } = require('express-handlebars');
@@ -24,6 +24,7 @@ app.get('/', function(req, res)
     {  
         let query1 = "SELECT * FROM Guardians;";               // Define our query
         let query2 = "SELECT * FROM Ranks";
+        let query3 = "SELECT Guardians.guardian_id, Guardians.name, Ranks.rank_id, Ranks.title FROM Guardians INNER JOIN Guardian_rank ON Guardians.guardian_id = Guardian_rank.guardian_id INNER JOIN Ranks ON Guardian_rank.rank_id = Ranks.rank_id ORDER BY Guardians.guardian_id;";
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
 
@@ -31,7 +32,6 @@ app.get('/', function(req, res)
 
             db.pool.query(query2, (error, rows, fields) => { 
                 let ranks = rows;
-
                 
                 let rankmap = {}
                 ranks.map(rank =>{
@@ -42,12 +42,12 @@ app.get('/', function(req, res)
                 guardians = guardians.map(guardian =>{
                     return Object.assign(guardian, {rank_id: rankmap[guardian.rank_id]})
                 })
-                
 
-                return res.render('index', {data: guardians, ranks: ranks});                  // Render the index.hbs file, and also send the renderer
+                db.pool.query(query3, function(error, rows, fields){
+                    return res.render('index', {data:guardians, data2: rows, ranks: ranks})
+                })
             })  
-
-        })                                                      
+        })      
     });                                        
 
 app.post('/add-guardian-ajax', function(req, res) 
@@ -63,9 +63,10 @@ app.post('/add-guardian-ajax', function(req, res)
     }
     
     // Create the query and run it on the database
-    query1 = `INSERT INTO Guardians (name, glimmer_balance) VALUES ('${data.name}', ${glimmer_balance})`;
+    query1 = `INSERT INTO Guardians (name, glimmer_balance) VALUES ('${data.name}', '${glimmer_balance}')`;
+    
     db.pool.query(query1, function(error, rows, fields){
-
+        
         // Check to see if there was an error
         if (error) {
     
@@ -76,8 +77,10 @@ app.post('/add-guardian-ajax', function(req, res)
         else
         {
             // If there was no error, perform a SELECT * 
-            query2 = `SELECT * FROM Guardians;`;
-            db.pool.query(query2, function(error, rows, fields){
+            db.pool.query(`INSERT INTO Guardian_rank(guardian_id, rank_id) VALUES ((SELECT guardian_id FROM Guardians WHERE name = '${data.name}'), 1);`) 
+            //query2 = `SELECT * FROM Guardians;`;
+            query4 = `SELECT * FROM Guardians INNER JOIN Guardian_rank on Guardians.guardian_id = Guardian_rank.guardian_id;`
+            db.pool.query(query4, function(error, rows, fields){
     
                 // If there was an error on the second query, send a 400
                 if (error) {
@@ -90,9 +93,8 @@ app.post('/add-guardian-ajax', function(req, res)
                 else
                 {
                     res.send(rows);
-                    
                 }
-            })  
+            }) 
         }
     })
 });

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Group 140 Project</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js" charset="utf-8" defer></script>
+    </head>
+    <body>
+        <ul style="display: inline">
+            <li style="display: inline"><a href="/">Guardians</a></li>
+            <li style="display: inline"><a href="guardian_rank.html">Guardian Ranks</a></li>
+            <li style="display: inline"><a href="ranks.html">Ranks</a></li>
+            <li style="display: inline"><a href="sales.html">Sales</a></li>
+            <li style="display: inline"><a href="weapons.html">Weapons</a></li>
+            <li style="display: inline"><a href="cosmetics.html">Cosmetics</a></li>
+            <li style="display: inline"><a href="consumable.html">Consumables</a></li>
+        </ul>
+        <div class="table-box">
+            <h1 class="table-title">Cosmetics</h1>
+            <table>
+                <tr>
+                    <th>Cosmetic ID</th>
+                    <th>Name</th>
+                    <th>Slot</th>
+                    <th>Description</th>
+                    <th>Rank Requirement</th>
+                    <th>Class</th>
+                    <th>Price</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>St0mp-EE5</td>
+                    <td>Legs</td>
+                    <td>I call them Stompies! For when your legs need that extra kick.</td>
+                    <td>2</td>
+                    <td>Hunter</td>
+                    <td>3000</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Astrocyte Verse</td>
+                    <td>Helm</td>
+                    <td>The ideocosm contain within this healm transforms the wearers head.</td>
+                    <td>0</td>
+                    <td>Warlock</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Gwisin Vest</td>
+                    <td>Chest</td>
+                    <td>The Traveler called my back. Told me my work on this side isnt done yet.</td>
+                    <td>1</td>
+                    <td>Hunter</td>
+                    <td>6000</td>
+                </tr>
+            </table>
+        </div>
+        <div class="action-button">
+            <button id="new-cosmetic">New Cosmetic</button>
+        </div>
+        <div class="hidden" id="new-cosmetic-modal">
+            <label for="cosmetic-name-input">Name:</label>
+            <input id="cosmetic-name-input" type="text"></input>
+
+            <label for="cosmetic-slot-input">Slot:</label>
+            <input id="cosmetic-slot-input" type="text"></input>
+
+
+            <label for="cosmetic-description-input">Description:</label>
+            <input id="cosmetic-description-input" type="text"></input>
+
+            <label for="cosmetic-rank-input">Rank Requirement:</label>
+            <input id="cosmetic-rank-input" type="text"></input>
+
+            <label for="cosmetic-element-input">Class:</label>
+            <input id="cosmetic-element-input" type="text"></input>
+
+            <label for="cosmetic-price-input">Price:</label>
+            <input id="cosmetic-price-input" type="text"></input>
+
+            <button id="new-rank-accept">Accept</button>
+        </div>
+    </body>
+</html>

@@ -13,14 +13,18 @@ addGuardianForm.addEventListener("submit", function (e) {
     let inputName = document.getElementById("input-name");
     let inputGlimmer = document.getElementById("input-glimmer");
 
+    let inputRank = document.getElementById("input-rank")
+
     // Get the values from the form fields
     let nameValue = inputName.value;
     let glimmerValue = inputGlimmer.value;
+    let rankValue = inputRank.value;
 
     // Put our data we want to send in a javascript object
     let data = {
         name: nameValue,
         glimmer_balance: glimmerValue,
+        rank: rankValue,
     }
     
     // Setup our AJAX request
@@ -53,9 +57,11 @@ addGuardianForm.addEventListener("submit", function (e) {
 // Creates a single row from an Object representing a single record from 
 // bsg_people
 addRowToTable = (data) => {
+    console.log(data)
 
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("guardians_table");
+    //let ranksTable = document.getElementById("ranks_table")
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -70,10 +76,22 @@ addRowToTable = (data) => {
     let nameCell = document.createElement("TD");
     let glimmerCell = document.createElement("TD");
 
+
+    //let row2 = document.createElement("TR")
+    //let guardianIdCell = document.createElement("TD");
+    //let guardianNameCell = document.createElement("TD");
+    //let rankIdCell = document.createElement("TD");
+    //let rankTitleCell = document.createElement("TD");
+
     // Fill the cells with correct data
     idCell.innerText = newRow.guardian_id;
     nameCell.innerText = newRow.name;
     glimmerCell.innerText = newRow.glimmer_balance;
+
+    //guardianIdCell.innerText = newRow.guardian_id;
+    //guardianNameCell.innerText = newRow.name;
+    //rankIdCell.innerText = newRow.rank_id;
+    //rankTitleCell.innerText = newRow.title;
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
@@ -87,8 +105,14 @@ addRowToTable = (data) => {
     row.appendChild(glimmerCell);
     row.appendChild(deleteCell);
 
+    //row2.appendChild(guardianIdCell)
+    //row2.appendChild(guardianNameCell)
+    //row2.appendChild(rankIdCell)
+    //row2.appendChild(rankTitleCell)
+
     row.setAttribute('data-value', newRow.guardian_id);
     
     // Add the row to the table
     currentTable.appendChild(row);
+    //ranksTable.appendChild(row2);
 }

@@ -3,6 +3,15 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 {{!-- Create a table --}}
+    <ul style="display: inline">
+        <li style="display: inline"><a href="/">Guardians</a></li>
+        <li style="display: inline"><a href="guardian_rank.html">Guardian Ranks</a></li>
+        <li style="display: inline"><a href="ranks.html">Ranks</a></li>
+        <li style="display: inline"><a href="sales.html">Sales</a></li>
+        <li style="display: inline"><a href="weapons.html">Weapons</a></li>
+        <li style="display: inline"><a href="cosmetics.html">Cosmetics</a></li>
+        <li style="display: inline"><a href="consumable.html">Consumables</a></li>
+    </ul>
 <table id="guardians_table">
 
     {{!-- Header section --}}
@@ -15,7 +24,6 @@
             <th>Guardian ID</th>
             <th>Name</th>
             <th>Glimmer Balance</th>
-            <th>Ranks</th>
         </tr>
     </thead>
 
@@ -27,7 +35,6 @@
             <td>{{this.guardian_id}}</td>
             <td>{{this.name}}</td>
             <td>{{this.glimmer_balance}}</td>
-            <td>{{this.rank_id}}</td>
             <td><button onclick="deleteGuardian({{this.guardian_id}})">Delete</button></td>
         </tr>
         {{/each}}
@@ -59,3 +66,32 @@
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_guardian.js"></script>
+<!--
+<table id="ranks_table">
+    <thead>
+        <h1>Guardian Ranks</h1>
+        <tr>
+            <th>Guardian ID</th>
+            <th>Name</th>
+            <th>Rank ID</th>
+            <th>Title</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {{#each data2}}
+        <tr>
+            <td>{{this.guardian_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.rank_id}}</td>
+            <td>{{this.title}}</td>
+        </tr>
+        {{/each}}
+        
+    </tbody>
+</table>
+-->
+
+
+

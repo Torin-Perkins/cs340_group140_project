@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Group 140 Project</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js" charset="utf-8" defer></script>
+    </head>
+    <body>
+        <ul style="display: inline">
+            <li style="display: inline"><a href="/">Guardians</a></li>
+            <li style="display: inline"><a href="guardian_rank.html">Guardian Ranks</a></li>
+            <li style="display: inline"><a href="ranks.html">Ranks</a></li>
+            <li style="display: inline"><a href="sales.html">Sales</a></li>
+            <li style="display: inline"><a href="weapons.html">Weapons</a></li>
+            <li style="display: inline"><a href="cosmetics.html">Cosmetics</a></li>
+            <li style="display: inline"><a href="consumable.html">Consumables</a></li>
+        </ul>
+        <div class="table-box">
+            <h1 class="table-title">Guardian-Rank</h1>
+            <table>
+                <tr>
+                    <th>guardian_id</th>
+                    <th>name</th>
+                    <th>rank_id</th>
+                    <th>title</th>
+                    
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Commander Zavala</td>
+                    <td>2</td>
+                    <td>Vanguard Legend</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Ikora Rey</td>
+                    <td>5</td>
+                    <td>Raid Boss</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Cayde-6</td>
+                    <td>3</td>
+                    <td>Crucble God</td>
+                </tr>
+                
+                </tr>
+            </table>
+        </div>
+        <div class="action-button">
+            <button id="new-guardian-rank">New Guardian Rank</button>
+        </div>
+        <div class="hidden" id="new-guardian-rank-modal">
+            <label for="guardian-rank-rank-id-input">Rank ID:</label>
+            <input id="guardian-rank-rank-id-input" type="text"></input>
+
+            <label for="guardian-rank-guardian-id-input">Guardian ID:</label>
+            <input id="guardian-rank-guardian-id-input" type="text"></input>
+
+            <button id="new-guardian-rank-accept">Accept</button>
+        </div>
+    </body>
+</html>

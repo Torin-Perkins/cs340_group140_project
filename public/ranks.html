@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Group 140 Project</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js" charset="utf-8" defer></script>
+    </head>
+    <body>
+        <ul style="display: inline">
+            <li style="display: inline"><a href="/">Guardians</a></li>
+            <li style="display: inline"><a href="guardian_rank.html">Guardian Ranks</a></li>
+            <li style="display: inline"><a href="ranks.html">Ranks</a></li>
+            <li style="display: inline"><a href="sales.html">Sales</a></li>
+            <li style="display: inline"><a href="weapons.html">Weapons</a></li>
+            <li style="display: inline"><a href="cosmetics.html">Cosmetics</a></li>
+            <li style="display: inline"><a href="consumable.html">Consumables</a></li>
+        </ul>
+        <div class="table-box">
+            <h1 class="table-title">Ranks</h1>
+            <table>
+                <tr>
+                    <th>Rank ID</th>
+                    <th>Name</th>
+                    
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>New Light</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Vanguard Legend</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Crucible God</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Gambit Beast</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Raid Boss</td>
+                </tr>
+            </table>
+        </div>
+        <div class="action-button">
+            <button id="new-rank">New Rank</button>
+        </div>
+        <div class="hidden" id="new-rank-modal">
+            <label for="rank-name-input">Name:</label>
+            <input id="rank-name-input" type="text"></input>
+
+            <button id="new-rank-accept">Accept</button>
+        </div>
+    </body>
+</html>
