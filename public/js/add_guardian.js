@@ -114,5 +114,5 @@ addRowToTable = (data) => {
     
     // Add the row to the table
     currentTable.appendChild(row);
-    //ranksTable.appendChild(row2);
+    //ranks
 }

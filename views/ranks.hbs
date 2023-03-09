@@ -1,0 +1,41 @@
+<ul style="display: inline">
+    <li style="display: inline"><a href="/">Guardians</a></li>
+    <li style="display: inline"><a href="/guardian_rank">Guardian Ranks</a></li>
+    <li style="display: inline"><a href="/ranks">Ranks</a></li>
+    <li style="display: inline"><a href="/sales">Sales</a></li>
+    <li style="display: inline"><a href="weapons.html">Weapons</a></li>
+    <li style="display: inline"><a href="cosmetics.html">Cosmetics</a></li>
+    <li style="display: inline"><a href="consumable.html">Consumables</a></li>
+</ul>
+
+<table id="r_table">
+    <thead>
+        <h1>Ranks</h1>
+        <tr>
+            <th>Rank ID</th>
+            <th>Title</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each r_data}}
+        <tr data-value={{this.rank_id}}>
+            <td>{{this.rank_id}}</td>
+            <td>{{this.title}}</td>
+            <td><button onclick="deleteRank({{this.rank_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script src="./js/delete_rank.js"></script>
+
+<p>Add a new Rank:</p>
+<form id="add-r-form-ajax">
+    <label for="input-title">Title:</label>
+    <input id="input-title" name = "input-title" type="text"></input>
+
+    <input type="submit">
+</form>
+
+<script src="./js/add_rank.js"></script>

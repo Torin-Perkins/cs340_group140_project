@@ -3,13 +3,13 @@
 /*
     SETUP
 */
-var express = require('express');   // We are using the express library for the web server
-var app = express();            // We need to instantiate an express object to interact with the server in our code
+var express = require('express');               // We are using the express library for the web server
+var app = express();                            // We need to instantiate an express object to interact with the server in our code
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
-PORT = 9112;                 // Set a port number at the top so it's easy to change in the future
+PORT = 9116;                                    // Set a port number at the top so it's easy to change in the future
 var db = require('./database/db-connector')
 
 const { engine } = require('express-handlebars');
@@ -20,35 +20,64 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 /*
     ROUTES
 */
-app.get('/', function(req, res)
-    {  
-        let query1 = "SELECT * FROM Guardians;";               // Define our query
-        let query2 = "SELECT * FROM Ranks";
-        let query3 = "SELECT Guardians.guardian_id, Guardians.name, Ranks.rank_id, Ranks.title FROM Guardians INNER JOIN Guardian_rank ON Guardians.guardian_id = Guardian_rank.guardian_id INNER JOIN Ranks ON Guardian_rank.rank_id = Ranks.rank_id ORDER BY Guardians.guardian_id;";
+app.get('/', function(req, res){  
+    let query1 = "SELECT * FROM Guardians;";               
+    let query2 = "SELECT * FROM Ranks";
+    let query3 = "SELECT Guardians.guardian_id, Guardians.name, Ranks.rank_id, Ranks.title FROM Guardians INNER JOIN Guardian_rank ON Guardians.guardian_id = Guardian_rank.guardian_id INNER JOIN Ranks ON Guardian_rank.rank_id = Ranks.rank_id ORDER BY Guardians.guardian_id;";
 
-        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+    db.pool.query(query1, function(error, rows, fields){    
+        let guardians = rows;
 
-            let guardians = rows;
+        db.pool.query(query2, (error, rows, fields) => { 
+            let ranks = rows;
+            
+            // Map ranks_id to title for easier viewing
+            let rankmap = {}
+            ranks.map(rank =>{
+                let id = parseInt(rank.rank_id, 10);
 
-            db.pool.query(query2, (error, rows, fields) => { 
-                let ranks = rows;
-                
-                let rankmap = {}
-                ranks.map(rank =>{
-                    let id = parseInt(rank.rank_id, 10);
+                rankmap[id] = rank["title"];
+            })
+            guardians = guardians.map(guardian =>{
+                return Object.assign(guardian, {rank_id: rankmap[guardian.rank_id]})
+            })
 
-                    rankmap[id] = rank["title"];
-                })
-                guardians = guardians.map(guardian =>{
-                    return Object.assign(guardian, {rank_id: rankmap[guardian.rank_id]})
-                })
+            db.pool.query(query3, function(error, rows, fields){
+                return res.render('index', {data:guardians, data2: rows, ranks: ranks})
+            })
+        })  
+    })      
+});  
 
-                db.pool.query(query3, function(error, rows, fields){
-                    return res.render('index', {data:guardians, data2: rows, ranks: ranks})
-                })
-            })  
-        })      
-    });                                        
+app.get('/guardian_rank', function(req, res){
+    let query1 = `SELECT * FROM Guardians;`;
+    let query2 = `SELECT * FROM Ranks;`;
+    let query3 = `SELECT Guardians.guardian_id, Guardians.name, Ranks.rank_id, Ranks.title FROM Guardians INNER JOIN Guardian_rank ON Guardians.guardian_id = Guardian_rank.guardian_id INNER JOIN Ranks ON Guardian_rank.rank_id = Ranks.rank_id ORDER BY Guardians.guardian_id;`;
+    
+    db.pool.query(query1, function(error, rows, fields){
+        let guardians = rows;
+
+        db.pool.query(query2, (error, rows, fields) => {
+            let ranks = rows;
+    
+            db.pool.query(query3, function(error, rows, fields){
+                let gr_data = rows;
+                return res.render('guardian_rank', {guardians, ranks, gr_data});
+            })
+        })
+    })
+
+    
+});
+
+app.get('/ranks', function(req, res){
+    let query2 = `SELECT * FROM Ranks;`;
+
+    db.pool.query(query2, function(error, rows, fields){
+
+        res.render('ranks', {r_data: rows});
+    })
+});
 
 app.post('/add-guardian-ajax', function(req, res) 
 {
@@ -99,38 +128,122 @@ app.post('/add-guardian-ajax', function(req, res)
     })
 });
 
-app.delete('/delete-guardian-ajax/', function(req,res,next){
+app.post('/add-gr-ajax', function(req, res){
+    let gr_data = req.body;
+    let gID = parseInt(gr_data.guardian_id)
+    let rID = parseInt(gr_data.rank_id)
+
+    let query1 = `INSERT INTO Guardian_rank(guardian_id, rank_id) VALUES ('${gID}', '${rID}');`;
+    db.pool.query(query1, function(error, rows, fields){
+        
+        if (error){
+            console.log(error);
+            res.sendStatus(400);
+        }
+        
+        else{
+            query2 = `SELECT * FROM Guardian_rank INNER JOIN Guardians ON Guardian_rank.guardian_id = Guardians.guardian_id INNER JOIN Ranks ON Guardian_rank.rank_id = Ranks.rank_id;`;
+            query5 = `SELECT * FROM Guardian_rank;`;
+            db.pool.query(query2, function(error, rows, fields){
+                
+                if(error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+
+                else{
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+app.post('/add-r-ajax', function(req, res){
+    let r_data = req.body;
+
+    let query1 = `INSERT INTO Ranks(title) VALUES ('${r_data.title}');`;
+    db.pool.query(query1, function(error, rows, fields){
+        
+        if (error){
+            console.log(error);
+            res.sendStatus(400);
+        }
+        
+        else{
+            query2 = `SELECT * FROM Ranks;`;
+            db.pool.query(query2, function(error, rows, fields){
+                
+                if(error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+
+                else{
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+app.delete('/delete-guardian-ajax/', function(req, res, next){
     let data = req.body;
     let guardian_id = parseInt(data.guardian_id);
     let deleteRank = `DELETE FROM Guardian_rank WHERE guardian_id = ?`;
     let deleteGuardian = `DELETE FROM Guardians WHERE guardian_id = ?`;
   
-  
-          // Run the 1st query
-          db.pool.query(deleteRank, [guardian_id], function(error, rows, fields){
-              if (error) {
-  
-              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-              console.log(error);
-              res.sendStatus(400);
-              }
-  
-              else
-              {
-                  // Run the second query
-                  db.pool.query(deleteGuardian, [guardian_id], function(error, rows, fields) {
-  
-                      if (error) {
-                          console.log(error);
-                          res.sendStatus(400);
-                      } else {
-                          res.sendStatus(204);
-                      }
-                  })
-              }
-  })});
+    // Run the 1st query
+    db.pool.query(deleteRank, [guardian_id], function(error, rows, fields){
+        if (error){
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
 
-  app.put('/put-guardian-ajax', function(req, res, next){
+        else{
+            // Run the second query
+            db.pool.query(deleteGuardian, [guardian_id], function(error, rows, fields) {
+                if (error){
+                    console.log(error);
+                    res.sendStatus(400);
+                } 
+                else{
+                    res.sendStatus(204);
+                }
+            })
+        }
+    })
+});
+
+app.delete('/delete-rank-ajax', function(req, res, next){
+    let r_data = req.body;
+    let rank_id = parseInt(r_data.rank_id)
+    let deleteGR = `DELETE FROM Guardian_rank WHERE rank_id = ?`; 
+    let deleteRank = `DELETE FROM Ranks WHERE rank_id = ?`;
+
+    db.pool.query(deleteGR, [rank_id], function(error, rows, fields){
+        if(error){
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        else{
+            db.pool.query(deleteRank, [rank_id], function(error, rows, fields) {
+                if(error){
+                    console.log(error);
+                    res.sendStatus(400);
+
+                }
+                else{
+                    res.sendStatus(204);
+                }
+            })
+        }
+    })
+});
+
+app.put('/put-guardian-ajax', function(req, res, next){
     let data = req.body;
 
     let guardian_id = parseInt(data.guardian_id);
@@ -160,7 +273,7 @@ app.delete('/delete-guardian-ajax/', function(req,res,next){
                 else{
                     query2 = `SELECT guardian_id, name, glimmer_balance FROM Guardians WHERE Guardians.guardian_id = ?;`;
                     db.pool.query(query2,[guardian_id], function(error, rows, fields){
-    
+
                     // If there was an error on the second query, send a 400
                     if (error) {
                         
@@ -180,8 +293,7 @@ app.delete('/delete-guardian-ajax/', function(req,res,next){
             })
         }
     });
-
-  });
+});
 
 /*
     LISTENER
@@ -189,6 +301,3 @@ app.delete('/delete-guardian-ajax/', function(req,res,next){
 app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
-
-
-

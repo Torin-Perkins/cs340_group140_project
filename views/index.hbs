@@ -3,15 +3,15 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 {{!-- Create a table --}}
-    <ul style="display: inline">
-        <li style="display: inline"><a href="/">Guardians</a></li>
-        <li style="display: inline"><a href="guardian_rank.html">Guardian Ranks</a></li>
-        <li style="display: inline"><a href="ranks.html">Ranks</a></li>
-        <li style="display: inline"><a href="sales.html">Sales</a></li>
-        <li style="display: inline"><a href="weapons.html">Weapons</a></li>
-        <li style="display: inline"><a href="cosmetics.html">Cosmetics</a></li>
-        <li style="display: inline"><a href="consumable.html">Consumables</a></li>
-    </ul>
+<ul style="display: inline">
+    <li style="display: inline"><a href="/">Guardians</a></li>
+    <li style="display: inline"><a href="/guardian_rank">Guardian Ranks</a></li>
+    <li style="display: inline"><a href="/ranks">Ranks</a></li>
+    <li style="display: inline"><a href="/sales">Sales</a></li>
+    <li style="display: inline"><a href="weapons.html">Weapons</a></li>
+    <li style="display: inline"><a href="cosmetics.html">Cosmetics</a></li>
+    <li style="display: inline"><a href="consumable.html">Consumables</a></li>
+</ul>
 <table id="guardians_table">
 
     {{!-- Header section --}}
@@ -43,10 +43,7 @@
 </table>
 <script src="./js/delete_guardian.js"></script>
 
-<div class="action-button">
-        <button id="new-guardian">New Guardian</button>
-</div>
-<p>Add a new guardian:</p>
+<p>Add a new Guardian:</p>
 <form id="add-guardian-form-ajax">
     <label for="input-name">Name:</label>
     <input id="input-name" name = "input-name" type="text"></input>
@@ -57,7 +54,7 @@
     <select name="input-rank" id="input-rank">
         <option value="">Select a rank</option>
         {{#each ranks}}
-        <option value="{{this.rank_id}}">{{this.title}}</option>
+            <option value="{{this.rank_id}}">{{this.title}}</option>
         {{/each}}
     </select>
 
@@ -67,7 +64,7 @@
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_guardian.js"></script>
 
-<p>Update Guardian</p>
+<p>Update a Guardian:</p>
 <form id="update-guardian-form-ajax">
             <label for="guardian-input-up">Choose a guardian:</label>
             <select name="guardian-input-up" id="guardian-input-up">
@@ -104,9 +101,7 @@
             <th>Title</th>
         </tr>
     </thead>
-
     <tbody>
-
         {{#each data2}}
         <tr>
             <td>{{this.guardian_id}}</td>
@@ -119,6 +114,3 @@
     </tbody>
 </table>
 -->
-
-
-
