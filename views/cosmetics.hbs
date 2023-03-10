@@ -1,0 +1,68 @@
+<ul style="display: inline">
+    <li style="display: inline"><a href="/">Guardians</a></li>
+    <li style="display: inline"><a href="/guardian_rank">Guardian Ranks</a></li>
+    <li style="display: inline"><a href="/ranks">Ranks</a></li>
+    <li style="display: inline"><a href="/sales">Sales</a></li>
+    <li style="display: inline"><a href="/weapons">Weapons</a></li>
+    <li style="display: inline"><a href="/cosmetic">Cosmetics</a></li>
+    <li style="display: inline"><a href="consumable.html">Consumables</a></li>
+</ul>
+
+<table id="cos_table">
+    <thead>
+        <h1>Cosmetics</h1>
+        <tr>
+            <th>Cosmetic ID</th>
+            <th>Name</th>
+            <th>Slot</th>
+            <th>Description</th>
+            <th>Rank Requirement</th>
+            <th>Class</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each cos_data}}
+        <tr data-value={{this.cosmetic_id}}>
+            <td>{{this.cosmetic_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.slot}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.rank_req}}</td>
+            <td>{{this.class}}</td>
+            <td>{{this.price}}</td>
+            <td><button onclick="deleteCosmetic({{this.cosmetic_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script src="./js/delete_cosmetic.js"></script>
+
+<p>Add a new Cosmetic:</p>
+<form id="add-cosmetic-form-ajax">
+
+            <label for="cosmetic-name-input">Name:</label>
+            <input id="cosmetic-name-input" type="text"></input>
+
+            <label for="cosmetic-slot-input">Slot:</label>
+            <input id="cosmetic-slot-input" type="text"></input>
+
+
+            <label for="cosmetic-description-input">Description:</label>
+            <input id="cosmetic-description-input" type="text"></input>
+
+            <label for="cosmetic-rank-input">Rank Requirement:</label>
+            <input id="cosmetic-rank-input" type="text"></input>
+
+            <label for="cosmetic-class-input">Class:</label>
+            <input id="cosmetic-class-input" type="text"></input>
+
+            <label for="cosmetic-price-input">Price:</label>
+            <input id="cosmetic-price-input" type="text"></input>
+
+    <input type="submit">
+</form>
+
+<script src="./js/add_cosmetic.js"></script>

@@ -85,6 +85,14 @@ app.get('/weapons', function(req, res){
     db.pool.query(query, function(error, rows, fields){
         res.render('weapons', {w_data: rows});
     })
+});
+
+app.get('/cosmetic', function(req, res){
+    let query = `SELECT * FROM Cosmetics`;
+
+    db.pool.query(query, function(error, rows, fields){
+        res.render('cosmetics', {cos_data: rows});
+    })
 })
 app.post('/add-guardian-ajax', function(req, res) 
 {
@@ -222,7 +230,37 @@ app.post('/add-weapon-ajax', function(req, res){
             })
         }
     })
-})
+});
+
+app.post('/add-cosmetic-ajax', function(req, res){
+    let cos_data = req.body;
+
+    let query1 = `INSERT INTO Cosmetics(name, slot, description, rank_req, class, price) 
+    VALUES ('${cos_data.name}', '${cos_data.slot}',  
+    '${cos_data.description}', '${cos_data.rank_req}', '${cos_data.class}', '${cos_data.price}');`;
+
+    db.pool.query(query1, function(error, rows, fields){
+        if (error){
+            console.log(error);
+            res.sendStatus(400);
+        }
+        
+        else{
+            query2 = `SELECT * FROM Cosmetics;`;
+            db.pool.query(query2, function(error, rows, fields){
+                
+                if(error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+
+                else{
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
 
 app.delete('/delete-guardian-ajax/', function(req, res, next){
     let data = req.body;
@@ -295,7 +333,24 @@ app.delete('/delete-weapon-ajax', function(req, res, next){
             res.sendStatus(204);
         }
     })
-})
+});
+
+app.delete('/delete-cosmetic-ajax', function(req, res, next){
+    let cos_data = req.body;
+    let cosmetic_id = parseInt(cos_data.cosmetic_id);
+    let deleteCosmetic = `DELETE FROM Cosmetics WHERE cosmetic_id = ?`;
+
+    db.pool.query(deleteCosmetic, [cosmetic_id], function(error, rows, fields){
+        if(error){
+            console.log(error);
+            res.sendStatus(400);
+
+        }
+        else{
+            res.sendStatus(204);
+        }
+    })
+});
 
 app.put('/put-guardian-ajax', function(req, res, next){
     let data = req.body;
