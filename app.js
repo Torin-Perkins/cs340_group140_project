@@ -79,6 +79,13 @@ app.get('/ranks', function(req, res){
     })
 });
 
+app.get('/weapons', function(req, res){
+    let query = `SELECT * FROM Weapons;`;
+
+    db.pool.query(query, function(error, rows, fields){
+        res.render('weapons', {w_data: rows});
+    })
+})
 app.post('/add-guardian-ajax', function(req, res) 
 {
     // Capture the incoming data and parse it back to a JS object
@@ -187,6 +194,36 @@ app.post('/add-r-ajax', function(req, res){
     })
 });
 
+app.post('/add-weapon-ajax', function(req, res){
+    let w_data = req.body;
+
+    let query1 = `INSERT INTO Weapons(name, type, slot, element, description, rank_req, price) 
+    VALUES ('${w_data.name}', '${w_data.type}', '${w_data.slot}', '${w_data.element}', 
+    '${w_data.description}', '${w_data.rank_req}', '${w_data.price}');`;
+
+    db.pool.query(query1, function(error, rows, fields){
+        if (error){
+            console.log(error);
+            res.sendStatus(400);
+        }
+        
+        else{
+            query2 = `SELECT * FROM Weapons;`;
+            db.pool.query(query2, function(error, rows, fields){
+                
+                if(error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+
+                else{
+                    res.send(rows);
+                }
+            })
+        }
+    })
+})
+
 app.delete('/delete-guardian-ajax/', function(req, res, next){
     let data = req.body;
     let guardian_id = parseInt(data.guardian_id);
@@ -242,6 +279,23 @@ app.delete('/delete-rank-ajax', function(req, res, next){
         }
     })
 });
+
+app.delete('/delete-weapon-ajax', function(req, res, next){
+    let w_data = req.body;
+    let weapon_id = parseInt(w_data.weapon_id);
+    let deleteWeapon = `DELETE FROM Weapons WHERE weapon_id = ?`;
+
+    db.pool.query(deleteWeapon, [weapon_id], function(error, rows, fields){
+        if(error){
+            console.log(error);
+            res.sendStatus(400);
+
+        }
+        else{
+            res.sendStatus(204);
+        }
+    })
+})
 
 app.put('/put-guardian-ajax', function(req, res, next){
     let data = req.body;

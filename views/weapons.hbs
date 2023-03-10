@@ -1,0 +1,72 @@
+<ul style="display: inline">
+    <li style="display: inline"><a href="/">Guardians</a></li>
+    <li style="display: inline"><a href="/guardian_rank">Guardian Ranks</a></li>
+    <li style="display: inline"><a href="/ranks">Ranks</a></li>
+    <li style="display: inline"><a href="/sales">Sales</a></li>
+    <li style="display: inline"><a href="/weapons">Weapons</a></li>
+    <li style="display: inline"><a href="cosmetics.html">Cosmetics</a></li>
+    <li style="display: inline"><a href="consumable.html">Consumables</a></li>
+</ul>
+
+<table id="w_table">
+    <thead>
+        <h1>Weapons</h1>
+        <tr>
+            <th>Weapon ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Slot</th>
+            <th>Element</th>
+            <th>Description</th>
+            <th>Rank Requirement</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each w_data}}
+        <tr data-value={{this.weapon_id}}>
+            <td>{{this.weapon_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.type}}</td>
+            <td>{{this.slot}}</td>
+            <td>{{this.element}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.rank_req}}</td>
+            <td>{{this.price}}</td>
+            <td><button onclick="deleteWeapon({{this.weapon_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script src="./js/delete_weapon.js"></script>
+
+<p>Add a new Weapon:</p>
+<form id="add-weapon-form-ajax">
+
+            <label for="weapon-name-input">Name:</label>
+            <input id="weapon-name-input" type="text"></input>
+
+            <label for="weapon-type-input">Type:</label>
+            <input id="weapon-type-input" type="text"></input>
+
+            <label for="weapon-slot-input">Slot:</label>
+            <input id="weapon-slot-input" type="text"></input>
+
+            <label for="weapon-element-input">Element:</label>
+            <input id="weapon-element-input" type="text"></input>
+
+            <label for="weapon-description-input">Description:</label>
+            <input id="weapon-description-input" type="text"></input>
+
+            <label for="weapon-rank-input">Rank Requirement:</label>
+            <input id="weapon-rank-input" type="text"></input>
+
+            <label for="weapon-price-input">Price:</label>
+            <input id="weapon-price-input" type="text"></input>
+
+    <input type="submit">
+</form>
+
+<script src="./js/add_weapon.js"></script>
