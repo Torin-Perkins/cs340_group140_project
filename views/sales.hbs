@@ -1,0 +1,71 @@
+<ul style="display: inline">
+    <li style="display: inline"><a href="/">Guardians</a></li>
+    <li style="display: inline"><a href="/guardian_rank">Guardian Ranks</a></li>
+    <li style="display: inline"><a href="/ranks">Ranks</a></li>
+    <li style="display: inline"><a href="/sales">Sales</a></li>
+    <li style="display: inline"><a href="/weapons">Weapons</a></li>
+    <li style="display: inline"><a href="/cosmetics">Cosmetics</a></li>
+    <li style="display: inline"><a href="/consumables">Consumables</a></li>
+</ul>
+
+<table id="sale_table">
+    <thead>
+        <h1>Sales</h1>
+        <tr>
+            <th>Sale ID</th>
+            <th>Total Price</th>
+            <th>Guardian</th>
+            <th>Weapon</th>
+            <th>Cosmetic</th>
+            <th>Consumable</th>
+            
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each sale_data}}
+        <tr data-value={{this.sale_id}}>
+            <td>{{this.sale_id}}</td>
+            <td>{{this.total_price}}</td>
+            <td>{{this.Guardian}}</td>
+            <td>{{this.Weapon}}</td>
+            <td>{{this.Cosmetic}}</td>
+            <td>{{this.Consumable}}</td>
+            <td><button onclick="deleteSale({{this.sale_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script src="./js/delete_sale.js"></script>
+
+<p>Add a new Sale:</p>
+<form id="add-sale-form-ajax">
+    <select name="input-guardian" id="input-guardian">
+        <option value="">Select a Guardian</option>
+        {{#each guardians}}
+            <option value="{{this.guardian_id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    <select name="input-weapon" id="input-weapon">
+        <option value="">Select a Weapon</option>
+        {{#each weapons}}
+            <option value="{{this.weapon_id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    <select name="input-cosmetic" id="input-cosmetic">
+        <option value="">Select a Cosmetic</option>
+        {{#each cosmetics}}
+            <option value="{{this.cosmetic_id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    <select name="input-consumable" id="input-consumable">
+        <option value="">Select a Consumable</option>
+        {{#each consumables}}
+            <option value="{{this.consumable_id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    <input type="submit">
+</form>
+
+<script src="./js/add_sale.js"></script>

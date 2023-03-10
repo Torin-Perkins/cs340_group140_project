@@ -1,0 +1,52 @@
+<ul style="display: inline">
+    <li style="display: inline"><a href="/">Guardians</a></li>
+    <li style="display: inline"><a href="/guardian_rank">Guardian Ranks</a></li>
+    <li style="display: inline"><a href="/ranks">Ranks</a></li>
+    <li style="display: inline"><a href="/sales">Sales</a></li>
+    <li style="display: inline"><a href="/weapons">Weapons</a></li>
+    <li style="display: inline"><a href="/cosmetics">Cosmetics</a></li>
+    <li style="display: inline"><a href="/consumables">Consumables</a></li>
+</ul>
+
+<table id="con_table">
+    <thead>
+        <h1>Consumables</h1>
+        <tr>
+            <th>Consumable ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each con_data}}
+        <tr data-value={{this.consumable_id}}>
+            <td>{{this.consumable_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.price}}</td>
+            <td><button onclick="deleteConsumable({{this.consumable_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script src="./js/delete_consumable.js"></script>
+
+<p>Add a new Consumable:</p>
+<form id="add-con-form-ajax">
+    <label for="input-name">Name:</label>
+    <input id="input-name" name = "input-name" type="text"></input>
+
+    <label for="input-desc">Description:</label>
+    <input id="input-desc" name = "input-desc" type="text"></input>
+
+    <label for="input-price">Price:</label>
+    <input id="input-price" name = "input-price" type="text"></input>
+
+    <input type="submit">
+</form>
+
+<script src="./js/add_consumable.js"></script>

@@ -6,10 +6,10 @@ addGrForm.addEventListener("submit", function (e) {
     
     e.preventDefault();
 
-    let inputRankID = document.getElementById('input-title').value;
+    let inputRankTitle = document.getElementById('input-title').value;
 
     let r_data = {
-        title: inputRankID,
+        title: inputRankTitle,
     }
 
     var xhttp = new XMLHttpRequest();

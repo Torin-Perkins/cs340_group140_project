@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
-PORT = 9116;                                    // Set a port number at the top so it's easy to change in the future
+PORT = 9117;                                    // Set a port number at the top so it's easy to change in the future
 var db = require('./database/db-connector')
 
 const { engine } = require('express-handlebars');
@@ -19,6 +19,10 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 
 /*
     ROUTES
+*/
+
+/*
+    GET
 */
 app.get('/', function(req, res){  
     let query1 = "SELECT * FROM Guardians;";               
@@ -65,19 +69,55 @@ app.get('/guardian_rank', function(req, res){
                 return res.render('guardian_rank', {guardians, ranks, gr_data});
             })
         })
-    })
-
-    
+    }) 
 });
 
 app.get('/ranks', function(req, res){
-    let query2 = `SELECT * FROM Ranks;`;
+    let query1 = `SELECT * FROM Ranks;`;
 
-    db.pool.query(query2, function(error, rows, fields){
+    db.pool.query(query1, function(error, rows, fields){
 
         res.render('ranks', {r_data: rows});
     })
 });
+
+app.get('/sales', function(req, res){
+    let query1 = `SELECT * FROM Sales;`;
+    let query2 = `SELECT * FROM Guardians;`
+    let query3 = `SELECT * FROM Weapons;`
+    let query4 = `SELECT * FROM Cosmetics;`
+    let query5 = `SELECT * FROM Consumables;`
+    let query6 = `SELECT Sales.sale_id, Sales.total_price, Sales.guardian_id, Guardians.name AS Guardian, Weapons.name AS Weapon, 
+    Cosmetics.name AS Cosmetic, Consumables.name AS Consumable FROM Sales
+    INNER JOIN Guardians ON Sales.guardian_id = Guardians.guardian_id
+    LEFT JOIN Weapons ON Sales.weapon_id = Weapons.weapon_id
+    LEFT JOIN Cosmetics ON Sales.cosmetic_id = Cosmetics.cosmetic_id
+    LEFT JOIN Consumables ON Sales.consumable_id = Consumables.consumable_id ORDER BY Sales.sale_id;`;
+
+    db.pool.query(query2, function(error, rows, fields){
+        let guardians = rows;
+
+        db.pool.query(query3, function(error, rows, fields){
+            let weapons = rows;
+
+            db.pool.query(query4, function(error, rows, fields){
+                let cosmetics = rows;
+
+                db.pool.query(query5, function(error, rows, fields){
+                    let consumables = rows;
+
+                    db.pool.query(query1, function(error, rows, fields){
+
+                        db.pool.query(query6, function(error, rows, fields){
+    
+                            res.render('sales', {guardians, weapons, cosmetics, consumables, sale_data:rows});
+                        })
+                    })
+                })
+            })
+        })
+    })
+})
 
 app.get('/weapons', function(req, res){
     let query = `SELECT * FROM Weapons;`;
@@ -87,13 +127,26 @@ app.get('/weapons', function(req, res){
     })
 });
 
-app.get('/cosmetic', function(req, res){
+app.get('/cosmetics', function(req, res){
     let query = `SELECT * FROM Cosmetics`;
 
     db.pool.query(query, function(error, rows, fields){
         res.render('cosmetics', {cos_data: rows});
     })
 })
+
+app.get('/consumables', function(req, res){
+    let query1 = `SELECT * FROM Consumables;`;
+
+    db.pool.query(query1, function(error, rows, fields){
+        
+        res.render('consumables', {con_data: rows});
+    })
+})
+
+/*
+    POST
+*/
 app.post('/add-guardian-ajax', function(req, res) 
 {
     // Capture the incoming data and parse it back to a JS object
@@ -158,7 +211,6 @@ app.post('/add-gr-ajax', function(req, res){
         
         else{
             query2 = `SELECT * FROM Guardian_rank INNER JOIN Guardians ON Guardian_rank.guardian_id = Guardians.guardian_id INNER JOIN Ranks ON Guardian_rank.rank_id = Ranks.rank_id;`;
-            query5 = `SELECT * FROM Guardian_rank;`;
             db.pool.query(query2, function(error, rows, fields){
                 
                 if(error){
@@ -201,6 +253,41 @@ app.post('/add-r-ajax', function(req, res){
         }
     })
 });
+
+app.post('/add-s-ajax', function(req, res){
+    let s_data = req.body;
+
+    let query1 = `INSERT INTO Sales(total_price, guardian_id, weapon_id, cosmetic_id, consumable_id) VALUES 
+    ('0', '${s_data.guardian_id}', '${s_data.weapon_id}', '${s_data.cosmetic_id}', '${s_data.consumable_id}');`;
+
+    db.pool.query(query1, function(error, rows, fields){
+        
+        if (error){
+            console.log(error);
+            res.sendStatus(400);
+        }
+        
+        else{
+            let query6 = `SELECT Sales.sale_id, Sales.total_price, Sales.guardian_id, Guardians.name AS Guardian, Weapons.name AS Weapon, 
+            Cosmetics.name AS Cosmetic, Consumables.name AS Consumable FROM Sales
+            INNER JOIN Guardians ON Sales.guardian_id = Guardians.guardian_id
+            LEFT JOIN Weapons ON Sales.weapon_id = Weapons.weapon_id
+            LEFT JOIN Cosmetics ON Sales.cosmetic_id = Cosmetics.cosmetic_id
+            LEFT JOIN Consumables ON Sales.consumable_id = Consumables.consumable_id ORDER BY Sales.sale_id;`;
+            db.pool.query(query6, function(error, rows, fields){
+                
+                if(error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+
+                else{
+                    res.send(rows);
+                }
+            })
+        }
+    })
+})
 
 app.post('/add-weapon-ajax', function(req, res){
     let w_data = req.body;
@@ -262,6 +349,35 @@ app.post('/add-cosmetic-ajax', function(req, res){
     })
 });
 
+app.post('/add-con-ajax', function(req, res){
+    let con_data = req.body;
+
+    let query1 = `INSERT INTO Consumables(name, description, price) VALUES ('${con_data.name}', '${con_data.description}', '${con_data.price}');`;
+    db.pool.query(query1, function(error, rows, fields){
+        if (error){
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        else{
+            query2 = `SELECT * FROM Consumables;`;
+            db.pool.query(query2, function(error, rows, fields){
+                
+                if(error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else{
+                    res.send(rows);
+                }
+            })
+        }
+    })
+})
+
+/*
+    DELETE
+*/
 app.delete('/delete-guardian-ajax/', function(req, res, next){
     let data = req.body;
     let guardian_id = parseInt(data.guardian_id);
@@ -293,19 +409,19 @@ app.delete('/delete-guardian-ajax/', function(req, res, next){
 
 app.delete('/delete-rank-ajax', function(req, res, next){
     let r_data = req.body;
-    let rank_id = parseInt(r_data.rank_id)
+    let rank_id = parseInt(r_data.rank_id);
     let deleteGR = `DELETE FROM Guardian_rank WHERE rank_id = ?`; 
     let deleteRank = `DELETE FROM Ranks WHERE rank_id = ?`;
 
     db.pool.query(deleteGR, [rank_id], function(error, rows, fields){
-        if(error){
+        if (error){
             console.log(error);
             res.sendStatus(400);
         }
 
-        else{
+        else {
             db.pool.query(deleteRank, [rank_id], function(error, rows, fields) {
-                if(error){
+                if (error){
                     console.log(error);
                     res.sendStatus(400);
 
@@ -352,6 +468,26 @@ app.delete('/delete-cosmetic-ajax', function(req, res, next){
     })
 });
 
+app.delete('/delete-con-ajax', function(req, res, next){
+    let con_data = req.body;
+    let consumable_id = parseInt(con_data.consumable_id);
+    let deleteCon = `DELETE FROM Consumables WHERE consumable_id = ?`;
+
+    db.pool.query(deleteCon, [consumable_id], function(error, rows, fields){
+        if (error){
+            console.log(errer);
+            res.sendStatus(400);
+        }
+
+        else{
+            res.sendStatus(204);
+        }
+    })
+})
+
+/*
+    PUT
+*/
 app.put('/put-guardian-ajax', function(req, res, next){
     let data = req.body;
 
