@@ -38,7 +38,6 @@ addGrForm.addEventListener("submit", function (e) {
 })
 
 addRowToTable = (con_data) => {
-    console.log(con_data);
     let currentTable = document.getElementById('con_table');
 
     let parsedData = JSON.parse(con_data);

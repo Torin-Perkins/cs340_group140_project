@@ -57,11 +57,6 @@ addRowToTable = (sale_data) => {
     let saleCosmeticCell = document.createElement("TD");
     let saleConsumableCell = document.createElement("TD");
 
-    for (let i = 0; i < parsedData.length; i++) {
-        //console.log(parsedData[i])
-        //console.log('   ')
-    }
-
     saleIDCell.innerText = newRow.sale_id;
     salePriceCell.innerText = '0';
     saleGuardianCell.innerText = newRow.Guardian;

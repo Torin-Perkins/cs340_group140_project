@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
-PORT = 9117;                                    // Set a port number at the top so it's easy to change in the future
+PORT = 9119;                                    // Set a port number at the top so it's easy to change in the future
 var db = require('./database/db-connector')
 
 const { engine } = require('express-handlebars');
@@ -433,6 +433,23 @@ app.delete('/delete-rank-ajax', function(req, res, next){
         }
     })
 });
+
+app.delete('/delete-s-ajax', function(req, res, next){
+    let sale_data = req.body;
+    let sale_id = parseInt(sale_data.sale_id);
+    let deleteSale = `DELETE FROM Sales WHERE sale_id = ?`;
+
+    db.pool.query(deleteSale, [sale_id], function(error, rows, fields){
+        if (error){
+            console.log(errer);
+            res.sendStatus(400);
+        }
+
+        else{
+            res.sendStatus(204);
+        }
+    })
+})
 
 app.delete('/delete-weapon-ajax', function(req, res, next){
     let w_data = req.body;

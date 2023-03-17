@@ -70,16 +70,10 @@ addWeaponForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data));
 })
 
-
-
-// Creates a single row from an Object representing a single record from 
-// bsg_people
+// Creates a single row from an Object representing a single record
 addRowToTable = (data) => {
-    console.log(data)
-
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("w_table");
-    //let ranksTable = document.getElementById("ranks_table")
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -99,13 +93,6 @@ addRowToTable = (data) => {
     let rankReqCell = document.createElement("TD");
     let priceCell = document.createElement("TD");
 
-
-    //let row2 = document.createElement("TR")
-    //let guardianIdCell = document.createElement("TD");
-    //let guardianNameCell = document.createElement("TD");
-    //let rankIdCell = document.createElement("TD");
-    //let rankTitleCell = document.createElement("TD");
-
     // Fill the cells with correct data
     idCell.innerText = newRow.weapon_id;
     nameCell.innerText = newRow.name;
@@ -116,15 +103,10 @@ addRowToTable = (data) => {
     rankReqCell.innerText = newRow.rank_req;
     priceCell.innerText = newRow.price;
 
-    //guardianIdCell.innerText = newRow.guardian_id;
-    //guardianNameCell.innerText = newRow.name;
-    //rankIdCell.innerText = newRow.rank_id;
-    //rankTitleCell.innerText = newRow.title;
-
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function(){
-        //deleteGuardian(newRow.guardian_id);
+        deleteWeapon(newRow.weapon_id);
     };
 
     // Add the cells to the row 
@@ -138,14 +120,9 @@ addRowToTable = (data) => {
     row.appendChild(priceCell);
     row.appendChild(deleteCell);
 
-    //row2.appendChild(guardianIdCell)
-    //row2.appendChild(guardianNameCell)
-    //row2.appendChild(rankIdCell)
-    //row2.appendChild(rankTitleCell)
 
     row.setAttribute('data-value', newRow.weapon_id);
     
     // Add the row to the table
     currentTable.appendChild(row);
-    //ranks
 }
