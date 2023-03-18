@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
-PORT = 9119;                                    // Set a port number at the top so it's easy to change in the future
+PORT = 9122;                                    // Set a port number at the top so it's easy to change in the future
 var db = require('./database/db-connector')
 
 const { engine } = require('express-handlebars');
@@ -151,7 +151,7 @@ app.post('/add-guardian-ajax', function(req, res)
 {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
-    
+
     // Capture NULL values
     let glimmer_balance = parseInt(data.glimmer_balance);
     if (isNaN(glimmer_balance))
@@ -174,7 +174,8 @@ app.post('/add-guardian-ajax', function(req, res)
         else
         {
             // If there was no error, perform a SELECT * 
-            db.pool.query(`INSERT INTO Guardian_rank(guardian_id, rank_id) VALUES ((SELECT guardian_id FROM Guardians WHERE name = '${data.name}'), 1);`) 
+            db.pool.query(`INSERT INTO Guardian_rank(guardian_id, rank_id) VALUES ((SELECT guardian_id FROM Guardians WHERE name = '${data.name}'), ${data.rank});`) 
+            console.log(data.rank_id)
             //query2 = `SELECT * FROM Guardians;`;
             query4 = `SELECT * FROM Guardians INNER JOIN Guardian_rank on Guardians.guardian_id = Guardian_rank.guardian_id;`
             db.pool.query(query4, function(error, rows, fields){
