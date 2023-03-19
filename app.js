@@ -36,16 +36,19 @@ app.get('/', function(req, res){
             let ranks = rows;
             
             // Map ranks_id to title for easier viewing
+            /*
             let rankmap = {}
+            if(ranks){
             ranks.map(rank =>{
                 let id = parseInt(rank.rank_id, 10);
 
                 rankmap[id] = rank["title"];
             })
+            }
             guardians = guardians.map(guardian =>{
                 return Object.assign(guardian, {rank_id: rankmap[guardian.rank_id]})
             })
-
+            */
             db.pool.query(query3, function(error, rows, fields){
                 return res.render('index', {data:guardians, data2: rows, ranks: ranks})
             })
@@ -259,8 +262,13 @@ app.post('/add-s-ajax', function(req, res){
     let s_data = req.body;
         
     let query1 = `INSERT INTO Sales(total_price, guardian_id, weapon_id, cosmetic_id, consumable_id) VALUES 
-    (0, '${s_data.guardian_id}', NULLIF(${s_data.weapon_id},''), NULLIF(${s_data.cosmetic_id},''), NULLIF(${s_data.consumable_id},''))`;
-
+    (
+        ((IFNULL((SELECT price FROM Weapons WHERE weapon_id = ${s_data.weapon_id}),0)) + 
+    (IFNULL((SELECT price FROM Cosmetics WHERE cosmetic_id = ${s_data.cosmetic_id}),0)) + 
+    (IFNULL((SELECT price FROM Consumables WHERE consumable_id = ${s_data.consumable_id}),0)))
+    , '${s_data.guardian_id}', NULLIF(${s_data.weapon_id},''), NULLIF(${s_data.cosmetic_id},''), NULLIF(${s_data.consumable_id},''));`;
+    
+    
     db.pool.query(query1, function(error, rows, fields){
         
         if (error){
@@ -269,6 +277,7 @@ app.post('/add-s-ajax', function(req, res){
         }
         
         else{
+            
             let query6 = `SELECT Sales.sale_id, Sales.total_price, Sales.guardian_id, Guardians.name AS Guardian, Weapons.name AS Weapon, 
             Cosmetics.name AS Cosmetic, Consumables.name AS Consumable FROM Sales
             INNER JOIN Guardians ON Sales.guardian_id = Guardians.guardian_id

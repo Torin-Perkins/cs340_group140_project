@@ -49,7 +49,7 @@ addRowToTable = (sale_data) => {
 
     let parsedData = JSON.parse(sale_data);
     let newRow = parsedData[parsedData.length - 1]
-
+    console.log(parsedData)
     let row = document.createElement("TR");
     let saleIDCell = document.createElement("TD");
     let salePriceCell = document.createElement("TD");
@@ -59,7 +59,7 @@ addRowToTable = (sale_data) => {
     let saleConsumableCell = document.createElement("TD");
 
     saleIDCell.innerText = newRow.sale_id;
-    salePriceCell.innerText = '0';
+    salePriceCell.innerText = newRow.total_price;
     saleGuardianCell.innerText = newRow.Guardian;
     saleWeaponCell.innerText = newRow.Weapon;
     saleCosmeticCell.innerText = newRow.Cosmetic;
