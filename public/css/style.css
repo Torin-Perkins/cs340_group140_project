@@ -1,3 +1,88 @@
 .hidden{
     visibility: hidden;
 }
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+  }
+#bannerimage {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("destinybanner.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    height: 200px;
+}
+
+#bannertext{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+#list-box{
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+ul{
+    background: #2e8bc042;
+    padding: 20px;
+    margin: 0px;
+    padding-top: 30px;
+    border-radius: 1pc;
+}
+ul li{
+    background: #2091dd8a;
+    color: rgb(68, 68, 68);
+    margin: 5px;
+    padding: 7px;
+    border-radius: 1pc;
+    
+}
+button{
+    background: #2091dd8a;
+    border-radius: 1pc;
+    padding: 5px;
+    text-decoration: solid;
+    border-color: black;
+    
+}
+button:hover{
+    background: #2e8bc042;
+}
+
+input[type=submit]{
+    background: #2091dd8a;
+    border-radius: 1pc;
+    padding: 5px;
+    text-decoration: solid;
+    border-color: black;
+}
+
+input[type=submit]:hover{
+    background: #2e8bc042;
+}
+
+table, th, td{
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 5px;
+    
+}
+table{
+    width: 60%;
+    margin: auto;
+}
+th, td{
+    text-align: center;
+}
+th{
+    background: #2091dd8a;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
