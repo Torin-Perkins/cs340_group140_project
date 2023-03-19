@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
-PORT = 9122;                                    // Set a port number at the top so it's easy to change in the future
+PORT = 9121;                                    // Set a port number at the top so it's easy to change in the future
 var db = require('./database/db-connector')
 
 const { engine } = require('express-handlebars');
@@ -257,9 +257,9 @@ app.post('/add-r-ajax', function(req, res){
 
 app.post('/add-s-ajax', function(req, res){
     let s_data = req.body;
-
+        
     let query1 = `INSERT INTO Sales(total_price, guardian_id, weapon_id, cosmetic_id, consumable_id) VALUES 
-    ('0', '${s_data.guardian_id}', '${s_data.weapon_id}', '${s_data.cosmetic_id}', '${s_data.consumable_id}');`;
+    (0, '${s_data.guardian_id}', NULLIF(${s_data.weapon_id},''), NULLIF(${s_data.cosmetic_id},''), NULLIF(${s_data.consumable_id},''))`;
 
     db.pool.query(query1, function(error, rows, fields){
         
@@ -295,7 +295,7 @@ app.post('/add-weapon-ajax', function(req, res){
 
     let query1 = `INSERT INTO Weapons(name, type, slot, element, description, rank_req, price) 
     VALUES ('${w_data.name}', '${w_data.type}', '${w_data.slot}', '${w_data.element}', 
-    '${w_data.description}', '${w_data.rank_req}', '${w_data.price}');`;
+    '${w_data.description}', NULLIF('${w_data.rank_req}',0), '${w_data.price}');`;
 
     db.pool.query(query1, function(error, rows, fields){
         if (error){
@@ -325,7 +325,7 @@ app.post('/add-cosmetic-ajax', function(req, res){
 
     let query1 = `INSERT INTO Cosmetics(name, slot, description, rank_req, class, price) 
     VALUES ('${cos_data.name}', '${cos_data.slot}',  
-    '${cos_data.description}', '${cos_data.rank_req}', '${cos_data.class}', '${cos_data.price}');`;
+    '${cos_data.description}', NULLIF('${cos_data.rank_req}',0), '${cos_data.class}', '${cos_data.price}');`;
 
     db.pool.query(query1, function(error, rows, fields){
         if (error){

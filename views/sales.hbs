@@ -41,26 +41,26 @@
 
 <p>Add a new Sale:</p>
 <form id="add-sale-form-ajax">
-    <select name="input-guardian" id="input-guardian">
+    <select name="input-guardian" id="input-guardian" required>
         <option value="">Select a Guardian</option>
         {{#each guardians}}
             <option value="{{this.guardian_id}}">{{this.name}}</option>
         {{/each}}
     </select>
     <select name="input-weapon" id="input-weapon">
-        <option value="">Select a Weapon</option>
+        <option value='0'>Select a Weapon</option>
         {{#each weapons}}
             <option value="{{this.weapon_id}}">{{this.name}}</option>
         {{/each}}
     </select>
     <select name="input-cosmetic" id="input-cosmetic">
-        <option value="">Select a Cosmetic</option>
+        <option value='0'>Select a Cosmetic</option>
         {{#each cosmetics}}
             <option value="{{this.cosmetic_id}}">{{this.name}}</option>
         {{/each}}
     </select>
     <select name="input-consumable" id="input-consumable">
-        <option value="">Select a Consumable</option>
+        <option value='0'>Select a Consumable</option>
         {{#each consumables}}
             <option value="{{this.consumable_id}}">{{this.name}}</option>
         {{/each}}

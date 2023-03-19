@@ -18,6 +18,7 @@ addGrForm.addEventListener("submit", function (e) {
         consumable_id: inputConsumable
     }
 
+
     console.log(sale_data)
 
     var xhttp = new XMLHttpRequest();
@@ -30,9 +31,9 @@ addGrForm.addEventListener("submit", function (e) {
             addRowToTable(xhttp.response);
 
             document.getElementById('input-guardian').value = '';
-            document.getElementById('input-weapon').value = '';
-            document.getElementById('input-cosmetic').value = '';
-            document.getElementById('input-consumable').value = '';
+            document.getElementById('input-weapon').value = '0';
+            document.getElementById('input-cosmetic').value = '0';
+            document.getElementById('input-consumable').value = '0';
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
