@@ -6,6 +6,10 @@ body {
     margin: 0;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("travlerbackground.jpg");
     color: #f2f2f2;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   }
 #bannerimage {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("destinybanner.jpg");
@@ -105,3 +109,10 @@ select{
     margin: 5px;
 }
 
+h2, h1{
+    margin-left: 10px;
+}
+
+form{
+    margin-left: 10px;
+}
