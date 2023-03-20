@@ -108,10 +108,13 @@ LEFT JOIN Cosmetics ON Sales.cosmetic_id = Cosmetics.cosmetic_id
 LEFT JOIN Consumables ON Sales.consumable_id = Consumables.consumable_id ORDER BY Sales.sale_id;
 
 --add new sale
--- price is calculated automatically based on the dropdown selections, if the selected guardian cannot afford it an error will be displayed
+-- price is calculated automatically based on the dropdown selections
 -- dropdowns can be NULL
 INSERT INTO Sales(total_price, guardian_id, weapon_id, cosmetic_id, consumable_id) VALUES 
-(0, '${s_data.guardian_id}', NULLIF(${s_data.weapon_id},''), NULLIF(${s_data.cosmetic_id},''), NULLIF(${s_data.consumable_id},''))
+    (((IFNULL((SELECT price FROM Weapons WHERE weapon_id = ${s_data.weapon_id}),0)) + 
+    (IFNULL((SELECT price FROM Cosmetics WHERE cosmetic_id = ${s_data.cosmetic_id}),0)) + 
+    (IFNULL((SELECT price FROM Consumables WHERE consumable_id = ${s_data.consumable_id}),0))), 
+    '${s_data.guardian_id}', NULLIF(${s_data.weapon_id},''), NULLIF(${s_data.cosmetic_id},''), NULLIF(${s_data.consumable_id},''));
 
 --delete sale
 DELETE FROM Sales WHERE sale_id = ?

@@ -40,33 +40,41 @@ addGrForm.addEventListener("submit", function (e) {
 })
 
 addRowToTable = (gr_data) => {
-    //console.log(gr_data);
     let currentTable = document.getElementById('gr_table');
 
     let parsedData = JSON.parse(gr_data);
-    //let newRow = parsedData[parsedData.length - 1]
 
     let row = document.createElement("TR");
     let gIDCell = document.createElement("TD");
     let gNameCell = document.createElement("TD");
     let rIDCell = document.createElement("TD");
     let rTitleCell = document.createElement("TD");
+    deleteCell = document.createElement("button");
+    deleteCell.innerHTML = "Delete";
 
+    //for loop to find the values of the user inserted data since it won't always be the most recent
     for (let i = 0; i < parsedData.length; i++) {
-        //console.log(parsedData[i])
-        //console.log('   ')
+
         if (parsedData[i].guardian_id == g_id && parsedData[i].rank_id == r_id){
             gIDCell.innerText = g_id;
             gNameCell.innerText = parsedData[i].name;
             rIDCell.innerText = r_id;
             rTitleCell.innerText = parsedData[i].title;
+
+            deleteCell.onclick = function(){
+                deleteGR(parsedData[i].guardian_id, parsedData[i].rank_id);
+            };
         }
     }
+
+    
+    
 
     row.appendChild(gIDCell);
     row.appendChild(gNameCell);
     row.appendChild(rIDCell);
     row.appendChild(rTitleCell);
+    row.appendChild(deleteCell);
 
     currentTable.appendChild(row);
 }

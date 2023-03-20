@@ -2,11 +2,8 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-{{!-- Create a table --}}
-
 <table id="guardians_table">
 
-    {{!-- Header section --}}
     <thead>
         <h1>Guardians</h1>
         <tr>
@@ -16,7 +13,6 @@
         </tr>
     </thead>
 
-    {{!-- Body section --}}
     <tbody>
 
         {{#each data}}
@@ -51,7 +47,6 @@
     <input type="submit">
 </form>
 
-{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_guardian.js"></script>
 
 <h2>Update a Guardian:</h2>
@@ -80,27 +75,3 @@
     </form>
 <script src="./js/update_guardian.js"></script>
 
-<!--
-<table id="ranks_table">
-    <thead>
-        <h1>Guardian Ranks</h1>
-        <tr>
-            <th>Guardian ID</th>
-            <th>Name</th>
-            <th>Rank ID</th>
-            <th>Title</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each data2}}
-        <tr>
-            <td>{{this.guardian_id}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.rank_id}}</td>
-            <td>{{this.title}}</td>
-        </tr>
-        {{/each}}
-        
-    </tbody>
-</table>
--->

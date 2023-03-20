@@ -65,9 +65,6 @@ addRowToTable = (data) => {
     let currentTable = document.getElementById("guardians_table");
     //let ranksTable = document.getElementById("ranks_table")
 
-    // Get the location where we should insert the new row (end of table)
-    let newRowIndex = currentTable.rows.length;
-
     // Get a reference to the new row from the database query (last object)
     let parsedData = JSON.parse(data);
     let newRow = parsedData[parsedData.length - 1]
@@ -78,22 +75,10 @@ addRowToTable = (data) => {
     let nameCell = document.createElement("TD");
     let glimmerCell = document.createElement("TD");
 
-
-    //let row2 = document.createElement("TR")
-    //let guardianIdCell = document.createElement("TD");
-    //let guardianNameCell = document.createElement("TD");
-    //let rankIdCell = document.createElement("TD");
-    //let rankTitleCell = document.createElement("TD");
-
     // Fill the cells with correct data
     idCell.innerText = newRow.guardian_id;
     nameCell.innerText = newRow.name;
     glimmerCell.innerText = newRow.glimmer_balance;
-
-    //guardianIdCell.innerText = newRow.guardian_id;
-    //guardianNameCell.innerText = newRow.name;
-    //rankIdCell.innerText = newRow.rank_id;
-    //rankTitleCell.innerText = newRow.title;
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
@@ -107,14 +92,13 @@ addRowToTable = (data) => {
     row.appendChild(glimmerCell);
     row.appendChild(deleteCell);
 
-    //row2.appendChild(guardianIdCell)
-    //row2.appendChild(guardianNameCell)
-    //row2.appendChild(rankIdCell)
-    //row2.appendChild(rankTitleCell)
-
     row.setAttribute('data-value', newRow.guardian_id);
     
     // Add the row to the table
     currentTable.appendChild(row);
-    //ranks
+
+    newDropDown = document.createElement('option');
+    newDropDown.innerText = newRow.guardian_id;
+    newDropDown.value = newRow.guardian_id;
+    document.getElementById('guardian-input-up').appendChild(newDropDown);
 }

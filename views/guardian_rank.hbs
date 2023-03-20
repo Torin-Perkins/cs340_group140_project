@@ -1,5 +1,3 @@
-
-
 <table id="gr_table">
     <thead>
         <h1>Guardian Ranks</h1>
@@ -13,15 +11,18 @@
 
     <tbody>
         {{#each gr_data}}
-        <tr>
-            <td>{{this.guardian_id}}</td>
+        <tr data-value={{this.guardian_id}}>
+            <td id="g_id">{{this.guardian_id}}</td>
             <td>{{this.name}}</td>
-            <td>{{this.rank_id}}</td>
+            <td id="r_id">{{this.rank_id}}</td>
             <td>{{this.title}}</td>
+            <td><button onclick="deleteGR({{this.guardian_id}}, {{this.rank_id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+
+<script src="./js/delete_gr.js"></script>
 
 <h2>Add a new Rank to a Guardian:</h2>
 <form id="add-gr-form-ajax">
